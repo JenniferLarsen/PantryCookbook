@@ -36,4 +36,10 @@ It utilizes a SQL database to store favorites and user profile information.
   - Jennifer Larsen ([JenniferLarsen](https://github.com/JenniferLarsen))
   - Cynthia Obiekezie ([CynthiaObiekezie](https://github.com/CynCity098))
 
+## Presentations
+- Week 1 - https://www.canva.com/design/DAF5avD2shg/Mse2M3tL_yHoWTvVe_2fVA/edit
+- Week 4 - https://www.canva.com/design/DAF8InPF-nw/nj765IjMdn01fdcq4-CQAg/edit
+- Week 5 - https://www.canva.com/design/DAF7eOJUaDk/UEKHTExPBkD3abVO01sYWg/edit
+- Final Presentation - https://www.canva.com/design/DAF9z3hKPEc/K6OIstzsjFQdSn8X2tEKOg/edit
+
 
