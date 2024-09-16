@@ -1,0 +1,87 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - tw-session-*
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+
+      - name: Compile the code
+        run: |
+          echo "Compiling the code..."
+          # Add your compilation commands here
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+
+      - name: Run unit tests
+        run: |
+          echo "Running unit tests..."
+          # Add your unit test commands here
+
+      - name: Lint code
+        run: |
+          echo "Linting code..."
+          npm ci
+          npx eslint src/**
+
+  graffiti:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Append graffiti
+        run: |
+          echo "Jennifer was here on $(date '+%B %d, %Y')" >> graffiti.txt
+          cat graffiti.txt
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    environment:
+      name: production
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Deploy application
+        run: |
+          echo "Deploying application..."
+          # Add your deployment commands here
+
+  submit:
+    runs-on: ubuntu-latest
+    needs: deploy
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Submit application
+        run: |
+          TSID=2240019
+          echo $GITHUB_REF | grep -E "refs/heads/(main|tw-session-)"
+          FORM_PAYLOAD="branch=$GITHUB_REF&sha=$GITHUB_SHA&url=$GITHUB_REPOSITORY&message=$GITHUB_EVENT_NAME&author=$GITHUB_ACTOR"
+          curl -H "Content-Type: application/x-www-form-urlencoded" -d "$FORM_PAYLOAD" -X POST "http://172.104.5.197/workbook/submit/$TSID"
